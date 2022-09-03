@@ -1,61 +1,44 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Basic JSON Editor Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
-  </head>
-  <body>
-    <div id='editor_holder'></div>
-    <button id='submit'>Submit (console.log)</button>
+<html lang="en">
 
-    <script>
-      // Initialize the editor with a JSON schema
-      var editor = new JSONEditor(document.getElementById('editor_holder'),{
-        schema: {
-          type: "object",
-          title: "Car",
-          properties: {
-            make: {
-              type: "string",
-              enum: [
-                "Toyota",
-                "BMW",
-                "Honda",
-                "Ford",
-                "Chevy",
-                "VW"
-              ]
-            },
-            model: {
-              type: "string"
-            },
-            year: {
-              type: "integer",
-              enum: [
-                1995,1996,1997,1998,1999,
-                2000,2001,2002,2003,2004,
-                2005,2006,2007,2008,2009,
-                2010,2011,2012,2013,2014
-              ],
-              default: 2008
-            },
-            safety: {
-              type: "integer",
-              format: "rating",
-              maximum: "5",
-              exclusiveMaximum: false,
-              readonly: false
-            }
-          }
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+</head>
+<body>
+  <div>
+    <label for="json_rules">json rules (["repo".git,"key","schema"]):</label>
+    <input type="text" id="json_rules">
+    <button onclick="generate()">Generate</button>
+  </div>
+
+  <div id='editor_holder'></div>
+  <button id='submit'>Submit</button>
+
+  <script>
+    function generate() {
+      const jsonRules = document.getElementById("json_rules");
+      var data = undefined;
+      try {
+        data = JSON.parse(json_rules.value);
+      } catch(e) {
+        alert(e);
+        return;
+      }
+      
+      var editor = new JSONEditor(document.getElementById('editor_holder'), 
+      {
+        schema: JSON.parse(data.schema)
       });
 
       // Hook up the submit button to log to the console
-      document.getElementById('submit').addEventListener('click',function() {
+      document.getElementById('submit').addEventListener('click', function () {
         // Get the value from the editor
-        console.log(editor.getValue());
+        alert(`Submitting ${JSON.stringify(editor.getValue())} to ${data.repo} with key ${data.key}` );
       });
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>
