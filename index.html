@@ -9,8 +9,12 @@
 </head>
 <body>
   <div>
-    <label for="json_rules">json rules (["repo".git,"key","schema"]):</label>
-    <input type="text" id="json_rules">
+    <label for="repo.git">repo.git</label>
+    <input type="text" id="repo.git"><br>
+    <label for="key">key</label>
+    <input type="text" id="key"><br>
+    <label for="schema">schema</label>
+    <input type="text" id="schema"><br>
     <button onclick="generate()">Generate</button>
   </div>
 
@@ -19,10 +23,13 @@
 
   <script>
     function generate() {
-      const jsonRules = document.getElementById("json_rules");
-      var data = undefined;
+      const repo_git = document.getElementById("repo.git");
+      const key = document.getElementById("key");
+      const schema = document.getElementById("schema");
+      
+      var schemaObj = undefined;
       try {
-        data = JSON.parse(json_rules.value);
+        schemaObj = JSON.parse(schema.value);
       } catch(e) {
         alert(e);
         return;
@@ -30,13 +37,29 @@
       
       var editor = new JSONEditor(document.getElementById('editor_holder'), 
       {
-        schema: JSON.parse(data.schema)
+        schema: schemaObj,
+        show_errors: 'always',
+        required_by_default: true,
+        disable_array_reorder: true,
+        keep_oneof_values: false
       });
 
       // Hook up the submit button to log to the console
       document.getElementById('submit').addEventListener('click', function () {
         // Get the value from the editor
-        alert(`Submitting ${JSON.stringify(editor.getValue())} to ${data.repo} with key ${data.key}` );
+        const errors = editor.validate();
+        debugger;
+
+        if (errors.length) {
+          // errors is an array of objects, each with a `path`, `property`, and `message` parameter
+          // `property` is the schema keyword that triggered the validation error (e.g. "minLength")
+          // `path` is a dot separated path into the JSON object (e.g. "root.path.to.field")
+          alert(JSON.stringify(errors));
+        }
+        else {
+          // It's valid!
+          alert(`Submitting ${JSON.stringify(editor.getValue())} to ${repo_git.value} with key ${key.value}` );
+        }
       });
     }
   </script>

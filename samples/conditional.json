@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "birthday": {
+      "type": "string",
+      "format": "date",
+      "minLength": 5
+    },
+    "name": {
+      "type": "object",
+      "options": {
+        "keep_oneof_values": false
+      },
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "fullName",
+          "options": {
+            "hidden": true
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "title": "First Name",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "fullName"
+              ],
+              "options": {
+                "hidden": true
+              }
+            },
+            "fullName": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "options": {
+            "keep_oneof_values": false
+          }
+        },
+        {
+          "title": "First and Last Name",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "first-last-name"
+              ],
+              "options": {
+                "hidden": true
+              }
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            }
+          },
+          "type": "object",
+          "options": {
+            "keep_oneof_values": false
+          }
+        }
+      ]
+    }
+  },
+  "required": [ "name", "birthday" ] 
+}

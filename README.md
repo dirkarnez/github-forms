@@ -2,6 +2,11 @@ github-forms
 ============
 Using [json-editor/json-editor: JSON Schema Based Editor](https://github.com/json-editor/json-editor)
 
+### Notes
+- Buggy (`oneOf`)
+    - therefore not to be used for complex UI
+- prefer compile-time UI generation
+
 ### TODOs
 - [ ] submit button should not be created at page initialization
 - [ ] Cookies
@@ -19,6 +24,9 @@ Using [json-editor/json-editor: JSON Schema Based Editor](https://github.com/jso
 
 ### Tools
 - [Free Online JSON to JSON Schema Converter](https://www.liquid-technologies.com/online-json-to-schema-converter)
+- [JSON Editor Online: JSON editor, JSON formatter, query JSON](https://jsoneditoronline.org/)
+- [Free Online JSON Escape / Unescape Tool - FreeFormatter.com](https://www.freeformatter.com/json-escape.html)
+- [Json-Editor Interactive Playground](https://pmk65.github.io/jedemov2/dist/demo.html)
 
 ### Similar projects
 - [eclipsesource/jsonforms: Customizable JSON Schema-based forms with React, Angular and Vue support out of the box.](https://github.com/eclipsesource/jsonforms)
